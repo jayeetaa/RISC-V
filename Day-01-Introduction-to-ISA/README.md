@@ -263,8 +263,7 @@ The signed integer experiment explored the highest and lowest values represented
 **Source file:** `signedHighest.c`
 
 ### Screenshot
-<img width="820" height="382" alt="Screenshot 2026-11-23 191546" src="https://github.com/user-attachments/assets/73e1846e-10d6-4712-9dbe-ce6b281ee560" />
-<img width="695" height="322" alt="Screenshot 2026-11-23 202243" src="https://github.com/user-attachments/assets/0797cae9-5267-4225-946b-e124cf6b5dd8" />
+
 
 
 ### 8.2 Unsigned Integer Representation

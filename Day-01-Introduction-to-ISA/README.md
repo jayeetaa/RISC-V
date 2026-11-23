@@ -85,9 +85,8 @@ Sum of numbers from 1 to 100 is 5050
 
 ### Screenshot
 
-![C program](images/sum1ton_code.png)
-
-![Program output](images/sum1ton_output.png)
+<img width="955" height="1030" alt="code 1ton" src="https://github.com/user-attachments/assets/c3e6d275-e408-4656-9bff-50d1834b20ef" />
+<img width="955" height="1030" alt="output of 1ton" src="https://github.com/user-attachments/assets/7ff2dff6-589e-478d-9c7e-6d940b1093c4" />
 
 ## 5. Experiment 2 – RISC-V Cross Compilation
 
@@ -134,7 +133,7 @@ The generated file was identified as a 64-bit RISC-V ELF object file.
 
 ### Screenshot
 
-![RISC-V compilation and object file](images/riscv_disassembly.png)
+<img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_17_57_50" src="https://github.com/user-attachments/assets/abbe4344-e352-477c-b7f0-9aae6bc2f660" />
 
 ## 6. Experiment 3 – Assembly Code Generation Using Objdump
 
@@ -182,13 +181,11 @@ Press `q` to exit the output viewer.
 
 ### Screenshots
 
-![Objdump disassembly](images/objdump_disassembly_1.png)
+<img width="1911" height="1198" alt="Screenshot 2026-11-23 180212" src="https://github.com/user-attachments/assets/832ef557-08d7-4765-87d3-1457852e063b" />
+<img width="1917" height="1198" alt="Screenshot 2026-11-23 181651" src="https://github.com/user-attachments/assets/c313ded5-8833-4589-a666-d9d7d5667f5c" />
+<img width="1917" height="1198" alt="Screenshot 2026-11-23 180404" src="https://github.com/user-attachments/assets/43034eb9-d274-4d6e-adeb-973cf2dae173" />
+<img width="695" height="322" alt="Screenshot 2026-11-23 202243" src="https://github.com/user-attachments/assets/0797cae9-5267-4225-946b-e124cf6b5dd8" />
 
-![Main function disassembly](images/objdump_main_disassembly.png)
-
-![Additional disassembly output](images/objdump_disassembly_2.png)
-
-![Disassembly details](images/disassembly_output.png)
 
 ## 7. Experiment 4 – Execution Using Spike Simulator
 
@@ -244,10 +241,8 @@ q
 ```
 
 ### Screenshots
-
-![Spike execution](images/spike_execution.png)
-
-![Spike simulation output](images/spike_sum_output.png)
+<img width="1912" height="1195" alt="Screenshot 2026-11-23 185921" src="https://github.com/user-attachments/assets/288dfc36-18e4-4835-8d41-45c1ef488ff8" />
+<img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_18_28_39" src="https://github.com/user-attachments/assets/992cb6b3-bdda-4b85-8698-df83c9cc51e6" />
 
 ## 8. Experiment 5 – Understanding Signed and Unsigned Integer Representation
 
@@ -269,8 +264,7 @@ The signed integer experiment explored the highest and lowest values represented
 **Source file:** `signedHighest.c`
 
 ### Screenshot
-
-![Signed integer program](images/signed_integer_code.png)
+<img width="820" height="382" alt="Screenshot 2026-11-23 191546" src="https://github.com/user-attachments/assets/73e1846e-10d6-4712-9dbe-ce6b281ee560" />
 
 ### 8.2 Unsigned Integer Representation
 
@@ -286,8 +280,7 @@ The unsigned integer experiment explored the maximum value represented by an uns
 **Source file:** `unsignedHighest.c`
 
 ### Screenshot
-
-![Unsigned integer program](images/unsigned_integer_code.png)
+<img width="955" height="1030" alt="vgcctgcv" src="https://github.com/user-attachments/assets/0d8ee0d9-5717-411e-9090-d0c7cb172b61" />
 
 ## 9. Practical Work Summary
 

@@ -280,6 +280,8 @@ The unsigned integer experiment explored the maximum value represented by an uns
 
 ### Screenshot
 <img width="955" height="1030" alt="vgcctgcv" src="https://github.com/user-attachments/assets/0d8ee0d9-5717-411e-9090-d0c7cb172b61" />
+<img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_20_31_23" src="https://github.com/user-attachments/assets/589e5bf5-4726-4d90-89d9-2c1f11c95ea9" />
+
 
 ## 9. Practical Work Summary
 

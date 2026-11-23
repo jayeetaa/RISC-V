@@ -263,8 +263,7 @@ The signed integer experiment explored the highest and lowest values represented
 **Source file:** `signedHighest.c`
 
 ### Screenshot
-
-
+<img width="955" height="1030" alt="VirtualBox_Risc-v_23_11_2026_20_19_39" src="https://github.com/user-attachments/assets/cb272d6a-9022-4f29-a1ee-a2e8542b7de3" />
 
 ### 8.2 Unsigned Integer Representation
 

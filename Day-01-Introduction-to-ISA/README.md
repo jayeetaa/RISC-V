@@ -184,7 +184,6 @@ Press `q` to exit the output viewer.
 <img width="1911" height="1198" alt="Screenshot 2026-11-23 180212" src="https://github.com/user-attachments/assets/832ef557-08d7-4765-87d3-1457852e063b" />
 <img width="1917" height="1198" alt="Screenshot 2026-11-23 181651" src="https://github.com/user-attachments/assets/c313ded5-8833-4589-a666-d9d7d5667f5c" />
 <img width="1917" height="1198" alt="Screenshot 2026-11-23 180404" src="https://github.com/user-attachments/assets/43034eb9-d274-4d6e-adeb-973cf2dae173" />
-<img width="695" height="322" alt="Screenshot 2026-11-23 202243" src="https://github.com/user-attachments/assets/0797cae9-5267-4225-946b-e124cf6b5dd8" />
 
 
 ## 7. Experiment 4 – Execution Using Spike Simulator
@@ -265,6 +264,8 @@ The signed integer experiment explored the highest and lowest values represented
 
 ### Screenshot
 <img width="820" height="382" alt="Screenshot 2026-11-23 191546" src="https://github.com/user-attachments/assets/73e1846e-10d6-4712-9dbe-ce6b281ee560" />
+<img width="695" height="322" alt="Screenshot 2026-11-23 202243" src="https://github.com/user-attachments/assets/0797cae9-5267-4225-946b-e124cf6b5dd8" />
+
 
 ### 8.2 Unsigned Integer Representation
 

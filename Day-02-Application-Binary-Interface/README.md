@@ -1,305 +1,53 @@
 
-# Day 02 – Application Binary Interface (ABI) and RISC-V Assembly Programming
+# Day 1 – Introduction to RISC-V Architecture and GNU Compiler Toolchain
 
-## 1. Objective
+## 1. Introduction
 
-To understand the Application Binary Interface (ABI), RISC-V register architecture, memory organization, endianness, instruction formats and assembly language programming.
+RISC-V is an open-source Instruction Set Architecture (ISA) based on Reduced Instruction Set Computer (RISC) principles. It provides a simple, modular and extensible architecture for processor design.
 
-The practical session focused on understanding how a C program interacts with RISC-V assembly language, how function arguments are passed through registers, and how assembly instructions perform arithmetic operations.
+The first day focused on understanding the software-to-hardware execution flow using C programming, RISC-V assembly language, GNU compiler toolchain, object file generation, assembly-level code inspection and Spike simulation.
 
----
-
-## 2. Understanding Software and Hardware Interfaces
-
-Software communicates with the underlying hardware through different interfaces and architectural layers.
-
-### 2.1 Application Programming Interface (API)
-
-An API (Application Programming Interface) provides an interface through which applications access functions and libraries.
-
-**Examples:**
-- `stdio.h` – Standard input/output functions in C.
-- `printf()` – Displays formatted output.
-- `scanf()` – Reads formatted input.
-
-### 2.2 Application Binary Interface (ABI)
-
-ABI (Application Binary Interface) defines how compiled programs interact at the binary level.
-
-It specifies:
-- Register usage.
-- Function calling conventions.
-- Argument passing.
-- Return value handling.
-- Stack management.
-- Data type representation.
-
-### 2.3 Instruction Set Architecture (ISA)
-
-ISA defines the instructions supported by a processor.
-
-RISC-V is an open and modular Instruction Set Architecture that defines instructions for arithmetic, logical operations, memory access and control flow.
-
-### 2.4 Register Transfer Level (RTL)
-
-RTL describes the digital hardware implementation of a processor using hardware description languages such as Verilog and SystemVerilog.
-
-### Software-to-Hardware Relationship
-
-Application → API → ABI → ISA → RTL → Hardware
+The practical session involved compiling C and assembly programs, executing RISC-V binaries using the Spike simulator, understanding the generated machine instructions and exploring the RISC-V workshop collateral.
 
 ---
 
-## 3. RISC-V Register Architecture
+## 2. Understanding the RISC-V GNU Compiler Toolchain
 
-RISC-V provides 32 general-purpose integer registers, numbered from `x0` to `x31`.
+The GNU Compiler Toolchain provides the necessary tools to compile, assemble, link and inspect programs developed for RISC-V processors.
 
-Each register is identified using a 5-bit register address in the instruction encoding.
+### 2.1 Important Tools
 
-### 3.1 Register Width
-
-The register width depends on the RISC-V architecture:
-
-| Architecture | Register Width |
+| Tool | Purpose |
 |---|---|
-| RV32I | 32 bits |
-| RV64I | 64 bits |
+| RISC-V GCC | Compiles C programs for RISC-V |
+| GNU Assembler | Converts assembly code into object files |
+| GNU Linker | Links object files and libraries |
+| GNU Objdump | Displays disassembled machine instructions |
+| Spike | RISC-V instruction set simulator |
+| Proxy Kernel (pk) | Provides an execution environment for applications |
 
-### 3.2 RISC-V Register and ABI Naming Convention
+### 2.2 Compilation Flow
 
-| Register | ABI Name | Purpose |
-|---|---|---|
-| x0 | zero | Constant zero |
-| x1 | ra | Return address |
-| x2 | sp | Stack pointer |
-| x3 | gp | Global pointer |
-| x4 | tp | Thread pointer |
-| x5 | t0 | Temporary register |
-| x6 | t1 | Temporary register |
-| x7 | t2 | Temporary register |
-| x8 | s0 / fp | Saved register / Frame pointer |
-| x9 | s1 | Saved register |
-| x10 | a0 | Argument / Return value |
-| x11 | a1 | Argument / Return value |
-| x12 | a2 | Function argument |
-| x13 | a3 | Function argument |
-| x14 | a4 | Function argument |
-| x15 | a5 | Function argument |
-| x16 | a6 | Function argument |
-| x17 | a7 | Function argument |
-| x18–x27 | s2–s11 | Saved registers |
-| x28–x31 | t3–t6 | Temporary registers |
+The basic RISC-V compilation flow is:
 
-### Important Register Conventions
-
-- `x0 (zero)` always contains zero.
-- `a0–a7` are used to pass function arguments.
-- `a0` and `a1` are also used for returning values.
-- `ra` stores the return address.
-- `sp` manages the stack.
-
-### 3.3 Caller-Saved and Callee-Saved Registers
-
-**Caller-Saved Registers:**
-
-The calling function must preserve the values if they are needed after a function call.
-
-Examples: `ra`, `t0–t6`, `a0–a7`.
-
-**Callee-Saved Registers:**
-
-The called function must restore these registers to their original values before returning.
-
-Examples: `s0–s11`.
+1. Write the C program.
+2. Write the assembly program.
+3. Compile the C and assembly source files.
+4. Generate the executable ELF file.
+5. Execute the program using Spike.
+6. Inspect the generated machine instructions using Objdump.
 
 ---
 
-## 4. Memory Organization and Endianness
+## 3. Practical Implementation – Sum of Numbers Using C and RISC-V Assembly
 
-Memory organization describes how data is stored and accessed in the system.
+### 3.1 Objective
 
-### 4.1 Data Representation
+To implement a program that calculates the sum of numbers using a C program and an external RISC-V assembly function.
 
-| Data Unit | Size |
-|---|---|
-| Bit | 1 bit |
-| Byte | 8 bits |
-| Halfword | 16 bits |
-| Word | 32 bits |
-| Doubleword | 64 bits |
+### 3.2 C Program – `1to9_custom.c`
 
-Important points:
-- Memory is byte-addressable.
-- Each memory location has a unique address.
-- A doubleword occupies 8 consecutive bytes.
-- RV64I supports 64-bit doubleword operations.
-
-### 4.2 Little Endian
-
-In Little Endian representation, the Least Significant Byte (LSB) is stored at the lowest memory address.
-
-### 4.3 Big Endian
-
-In Big Endian representation, the Most Significant Byte (MSB) is stored at the lowest memory address.
-
-**Example:**
-
-Consider the 64-bit hexadecimal value:
-
-`0x123456789ABCDEF0`
-
-| Address | Little Endian | Big Endian |
-|---|---|---|
-| 0x1000 | F0 | 12 |
-| 0x1001 | DE | 34 |
-| 0x1002 | BC | 56 |
-| 0x1003 | 9A | 78 |
-| 0x1004 | 78 | 9A |
-| 0x1005 | 56 | BC |
-| 0x1006 | 34 | DE |
-| 0x1007 | 12 | F0 |
-
----
-
-## 5. RISC-V Load and Store Instructions
-
-Load and store instructions are used to transfer data between memory and registers.
-
-### 5.1 Load Doubleword (LD)
-
-The `ld` instruction loads a 64-bit value from memory into a destination register.
-
-**Syntax:**
-
-```asm
-ld rd, offset(rs1)
-```
-
-**Example:**
-
-```asm
-ld x8, 16(x23)
-```
-
-Explanation:
-- `x8` – Destination register.
-- `x23` – Base address register.
-- `16` – Immediate offset.
-
-Effective address:
-
-`Address = Contents of x23 + 16`
-
-The processor loads 8 bytes from the calculated memory address into `x8`.
-
-### 5.2 Store Doubleword (SD)
-
-The `sd` instruction stores a 64-bit value from a register into memory.
-
-**Syntax:**
-
-```asm
-sd rs2, offset(rs1)
-```
-
-**Example:**
-
-```asm
-sd x8, 8(x23)
-```
-
-Explanation:
-- `x8` – Source register.
-- `x23` – Base address register.
-- `8` – Immediate offset.
-
-Effective address:
-
-`Address = Contents of x23 + 8`
-
----
-
-## 6. RISC-V Instruction Formats
-
-RISC-V instructions use different formats depending on the operation.
-
-The standard RV64I base instructions use 32-bit instruction encoding.
-
-### 6.1 R-Type Instruction
-
-Used for register-to-register operations.
-
-**Example:**
-
-```asm
-add x8, x24, x8
-```
-
-Operation:
-
-`x8 = x24 + x8`
-
-Instruction fields:
-
-| Field | Bit Positions |
-|---|---|
-| funct7 | [31:25] |
-| rs2 | [24:20] |
-| rs1 | [19:15] |
-| funct3 | [14:12] |
-| rd | [11:7] |
-| opcode | [6:0] |
-
-### 6.2 I-Type Instruction
-
-Used for immediate operations and load instructions.
-
-**Example:**
-
-```asm
-ld x8, 16(x23)
-```
-
-Instruction fields:
-
-| Field | Bit Positions |
-|---|---|
-| Immediate | [31:20] |
-| rs1 | [19:15] |
-| funct3 | [14:12] |
-| rd | [11:7] |
-| opcode | [6:0] |
-
-### 6.3 S-Type Instruction
-
-Used for store operations.
-
-**Example:**
-
-```asm
-sd x8, 8(x23)
-```
-
-Instruction fields:
-
-| Field | Bit Positions |
-|---|---|
-| Immediate [11:5] | [31:25] |
-| rs2 | [24:20] |
-| rs1 | [19:15] |
-| funct3 | [14:12] |
-| Immediate [4:0] | [11:7] |
-| opcode | [6:0] |
-
----
-
-## 7. Practical Implementation – Sum of Numbers Using C and RISC-V Assembly
-
-### 7.1 Objective
-
-To understand how a C program calls an external RISC-V assembly function and how the sum of numbers is calculated using assembly instructions.
-
-### 7.2 C Program – `1to9_custom.c`
+The C program calls an external assembly function named `load()` to calculate the sum.
 
 ```c
 #include <stdio.h>
@@ -320,7 +68,20 @@ int main()
 }
 ```
 
-### 7.3 RISC-V Assembly Program – `load.S`
+**Program Explanation:**
+
+- `stdio.h` is included for the `printf()` function.
+- `load()` is declared as an external assembly function.
+- `count` is initialized to 9.
+- The assembly function is called with arguments 0 and 10.
+- The returned result is displayed using `printf()`.
+
+**Screenshot – C Program**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_08_37_48" src="https://github.com/user-attachments/assets/7c7155de-e1e7-47ca-92ba-c1b09a1d58aa" />
+
+### 3.3 RISC-V Assembly Program – `load.S`
+
+The assembly program implements the addition operation using RISC-V instructions.
 
 ```asm
 .section .text
@@ -341,113 +102,293 @@ loop:
     ret
 ```
 
-### 7.4 Explanation of Assembly Instructions
+**Instruction Explanation:**
 
-| Instruction | Description |
+| Instruction | Purpose |
 |---|---|
 | `add` | Adds two register values |
 | `addi` | Adds an immediate value |
 | `blt` | Branches if one register is less than another |
-| `ret` | Returns from a function |
+| `ret` | Returns from the function |
 | `zero` | Constant zero register |
-| `a0` | First argument and return value |
-| `a1` | Second argument |
-| `a2–a4` | Registers used in the calculation |
+| `a0`, `a1` | Function argument registers |
 
-### 7.5 Program Execution Flow
-
-1. The C program initializes `result = 0`.
-2. The variable `count` is initialized to 9.
-3. The function `load(0, count + 1)` is called.
-4. Arguments are passed through registers `a0` and `a1`.
-5. The assembly function initializes the working registers.
-6. The loop adds the numbers from 0 to 9.
-7. The `blt` instruction checks the loop condition.
-8. The final result is transferred to `a0`.
-9. The `ret` instruction returns control to the C program.
-10. The C program displays the result using `printf()`.
-
-### 7.6 Expected Output
-
-```text
-Sum of numbers from 1 to 9 is 45
-```
+**Screenshot – Assembly Program**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_08_45_58" src="https://github.com/user-attachments/assets/b4d4f79d-cec3-44eb-bc2f-54242286821f" />
 
 ---
 
-## 8. Compilation and Assembly Code Analysis
+## 4. Compilation Using RISC-V GCC
 
-The RISC-V GCC cross-compiler is used to compile C and assembly programs for the RISC-V architecture.
+The RISC-V GCC cross-compiler is used to compile the C and assembly programs into an executable ELF file.
 
-### Compilation Command
+### 4.1 Compilation Command
 
 ```bash
 riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o 1to9_custom.elf 1to9_custom.c load.S
 ```
 
-### Execution Using Spike Simulator
+### 4.2 Execution Using Spike Simulator
 
 ```bash
 spike pk 1to9_custom.elf
 ```
 
-### Viewing Disassembled Instructions
+### 4.3 Expected Output
+
+```text
+Sum of numbers from 1 to 9 is 45
+```
+
+**Screenshot – Compilation and Execution**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_01_49" src="https://github.com/user-attachments/assets/67aa316f-cbe8-4436-b774-66354c0bfdf9" />
+
+---
+
+## 5. Understanding Object Files and Disassembly
+
+After compilation, the generated ELF file contains machine instructions that can be inspected using GNU Objdump.
+
+### 5.1 Viewing Disassembled Instructions
 
 ```bash
 riscv64-unknown-elf-objdump -d 1to9_custom.elf | less
 ```
 
-### Understanding the Disassembly
+### 5.2 Understanding Disassembly
 
-The object dump utility displays the machine instructions generated by the compiler.
+Disassembly helps to understand how high-level C instructions are translated into low-level RISC-V machine instructions.
 
-It helps to understand:
-- How C code is translated into machine instructions.
-- How function calls are implemented.
-- How registers are used during execution.
-- How arithmetic and branch instructions are represented.
-- How assembly instructions correspond to machine code.
+It provides information about:
+
+- Instruction addresses.
+- Machine code representations.
+- Assembly instructions.
+- Register usage.
+- Function calls and return instructions.
+- Branch and arithmetic operations.
+
+**Screenshot – RISC-V Disassembly**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_03_44" src="https://github.com/user-attachments/assets/3c7ab9fb-3baf-422a-a309-6ae5684df5f4" />
 
 ---
 
-## 9. Tools and Technologies Used
+## 6. Exploring RISC-V Workshop Collateral
+
+The RISC-V workshop collateral directory contains the required source files, scripts, testbench files and toolchain resources used during the practical session.
+
+### 6.1 Exploring the Directory
+
+```bash
+cd ~/riscv_workshop_collaterals
+ls -ltr
+```
+
+### 6.2 Exploring the Labs Directory
+
+```bash
+cd labs
+ls -ltr
+```
+
+The labs directory contains files such as:
+
+| File | Description |
+|---|---|
+| `testbench.v` | Verilog testbench |
+| `syscalls.c` | System call implementation |
+| `start.S` | Startup assembly code |
+| `rv32im.sh` | RISC-V execution script |
+| `riscv.ld` | Linker script |
+| `picorv32.v` | PicoRV32 processor source |
+| `hello.c` | C program |
+| `1to9_custom.c` | Custom C program |
+| `load.S` | Assembly function |
+
+**Screenshot – Workshop Directory Structure**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_11_33" src="https://github.com/user-attachments/assets/962fb064-6469-4049-8038-b98ce54a6759" />
+
+---
+
+## 7. Understanding the RISC-V Execution Script
+
+The `rv32im.sh` script contains the commands required to compile the source files and generate the firmware image.
+
+### 7.1 Compilation and Linking Flow
+
+The script performs the following operations:
+
+1. Compiles the C source file.
+2. Compiles the assembly source file.
+3. Compiles the system call implementation.
+4. Links the object files with the linker script.
+5. Generates the ELF executable.
+6. Converts the ELF file into a Verilog-compatible firmware image.
+7. Generates the testbench simulation executable.
+
+### 7.2 Execution Script
+
+The script uses commands similar to the following:
+
+```bash
+riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o 1to9_custom.o 1to9_custom.c
+
+riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o load.o load.S
+
+riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o syscalls.o syscalls.c
+
+riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32im -Wl,--gc-sections -o firmware.elf 1to9_custom.o load.o syscalls.o -T riscv.ld -lstdc++
+
+riscv64-unknown-elf-objcopy -O verilog firmware.elf firmware.tmp
+
+python3 hex8tohex32.py firmware.hex > firmware32.hex
+
+iverilog -o testbench.vvp testbench.v picorv32.v
+
+vvp -N testbench.vvp
+```
+
+**Screenshot – RISC-V Script**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_14_57" src="https://github.com/user-attachments/assets/5ee95e8c-7f52-481d-b7b1-0ae839f6649a" />
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_17_21" src="https://github.com/user-attachments/assets/62ba26cd-aace-47ed-bccd-06227bb0ff43" />
+
+---
+
+## 8. Modifying and Running the C Program
+
+The C program was modified to change the number of terms used in the summation.
+
+### 8.1 Modified C Program
+
+The count variable was changed from 9 to 3.
+
+```c
+#include <stdio.h>
+
+extern int load(int x, int y);
+
+int main() {
+    int result = 0;
+    int count = 3;
+
+    result = load(0, count + 1);
+
+    printf("Sum of number from 1 to %d is %d\n",
+           count, result);
+}
+```
+
+### 8.2 Execution
+
+```bash
+chmod 777 rv32im.sh
+./rv32im.sh
+```
+
+### 8.3 Output
+
+```text
+Sum of number from 1 to 3 is 6
+TRAP
+```
+
+**Screenshot – Modified Program Execution**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_25_19" src="https://github.com/user-attachments/assets/f024e874-8004-4f70-996a-117d286aa35f" />
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_25_58" src="https://github.com/user-attachments/assets/2aa337dc-bd4d-4777-a166-932807ace504" />
+
+---
+
+## 9. Firmware Generation and Inspection
+
+The firmware image is generated from the compiled ELF file and is used by the processor simulation environment.
+
+### 9.1 Firmware Files
+
+The following files are generated during the build process:
+
+- `firmware.elf`
+- `firmware.hex`
+- `firmware32.hex`
+- `testbench.vvp`
+
+### 9.2 Inspecting Firmware Hexadecimal Data
+
+```bash
+vim firmware.hex
+```
+
+The hexadecimal file contains the machine-code representation of the compiled program.
+
+**Screenshot – Firmware Hexadecimal Output**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_27_02" src="https://github.com/user-attachments/assets/110e51e1-9a21-4e87-9275-31d73425e76f" />
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_27_48" src="https://github.com/user-attachments/assets/d3d7b268-b9c9-482a-9cca-914aba2a03ba" />
+
+---
+
+## 10. Verilog Testbench and Processor Simulation
+
+A Verilog testbench is used to provide the simulation environment for the PicoRV32 processor.
+
+### 10.1 Testbench – `testbench.v`
+
+The testbench instantiates the PicoRV32 processor and connects the required clock, reset and memory interface signals.
+
+**Screenshot – Verilog Testbench**
+<img width="955" height="1030" alt="VirtualBox_Risc-v_24_11_2026_09_28_52" src="https://github.com/user-attachments/assets/857c3202-d106-474f-b99f-a1af1fc5e394" />
+
+### 10.2 Running the Simulation
+
+```bash
+iverilog -o testbench.vvp testbench.v picorv32.v
+vvp -N testbench.vvp
+```
+
+The simulation executable runs the testbench and displays the processor execution output.
+
+---
+
+## 11. Tools and Technologies Used
 
 | Tool / Technology | Purpose |
 |---|---|
 | Ubuntu Linux | Development environment |
 | RISC-V GCC | Cross-compilation |
-| Spike Simulator | RISC-V instruction simulation |
+| GNU Assembler | Assembly compilation |
 | GNU Objdump | Disassembly analysis |
+| Spike Simulator | RISC-V instruction simulation |
+| Proxy Kernel | Application execution environment |
+| Icarus Verilog | Verilog compilation |
+| VVP | Simulation execution |
+| PicoRV32 | RISC-V processor core |
 | C Programming | Application development |
 | RISC-V Assembly | Low-level programming |
-| Linux Terminal | Executing commands |
 
 ---
 
-## 10. Key Learning Outcomes
+## 12. Key Learning Outcomes
 
-- Understood the difference between API and ABI.
-- Learned the relationship between software interfaces and hardware architecture.
-- Studied the 32 general-purpose RISC-V registers.
-- Understood register naming conventions and their purposes.
-- Learned caller-saved and callee-saved register conventions.
-- Understood memory organization and byte-addressable memory.
-- Studied Little Endian and Big Endian representation.
-- Learned RISC-V load and store instructions.
-- Understood R-Type, I-Type and S-Type instruction formats.
-- Practiced understanding C and RISC-V assembly interaction.
-- Learned how function arguments are passed through ABI registers.
-- Understood how assembly instructions implement loops and arithmetic operations.
-- Explored compilation and disassembly using RISC-V development tools.
+- Understood the fundamentals of RISC-V architecture.
+- Learned about the GNU RISC-V compiler toolchain.
+- Understood the C and assembly programming interface.
+- Practiced writing and compiling C programs.
+- Learned how to write RISC-V assembly functions.
+- Understood function arguments and return values using registers.
+- Practiced cross-compilation using RISC-V GCC.
+- Learned to generate and execute ELF files.
+- Executed RISC-V programs using the Spike simulator.
+- Inspected machine instructions using GNU Objdump.
+- Explored RISC-V workshop collateral and lab files.
+- Understood firmware generation and hexadecimal file formats.
+- Explored Verilog testbench-based processor simulation.
 
 ---
 
-## 11. Conclusion
+## 13. Conclusion
 
-Day 02 provided a deeper understanding of the Application Binary Interface, RISC-V register architecture, memory organization and instruction formats.
+Day 1 provided a practical introduction to RISC-V architecture and the GNU compiler toolchain.
 
-The practical exercise demonstrated how a C program interacts with an assembly function through ABI-defined registers and calling conventions.
+The exercises demonstrated how C programs and assembly functions can be compiled into RISC-V executable files and executed using simulation tools.
 
-By studying RISC-V assembly instructions, compilation and disassembly, I gained a better understanding of how high-level C programs are translated into low-level processor instructions.
+The session also introduced the RISC-V workshop environment, firmware generation, instruction-level analysis and processor simulation using Verilog.
 
-This session helped strengthen my understanding of the connection between software, assembly language and processor architecture.
+This practical experience helped develop a basic understanding of the software-to-hardware execution flow and the tools used in RISC-V processor development.

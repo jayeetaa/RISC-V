@@ -86,7 +86,7 @@ Sum of numbers from 1 to 100 is 5050
 ### Screenshot
 
 <img width="955" height="1030" alt="code 1ton" src="https://github.com/user-attachments/assets/c3e6d275-e408-4656-9bff-50d1834b20ef" />
-<img width="955" height="1030" alt="output of 1ton" src="https://github.com/user-attachments/assets/7ff2dff6-589e-478d-9c7e-6d940b1093c4" />
+
 
 ## 5. Experiment 2 – RISC-V Cross Compilation
 
@@ -132,8 +132,8 @@ file sum1ton.o
 The generated file was identified as a 64-bit RISC-V ELF object file.
 
 ### Screenshot
+<img width="955" height="1030" alt="output of 1ton" src="https://github.com/user-attachments/assets/7ff2dff6-589e-478d-9c7e-6d940b1093c4" />
 
-<img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_17_57_50" src="https://github.com/user-attachments/assets/abbe4344-e352-477c-b7f0-9aae6bc2f660" />
 
 ## 6. Experiment 3 – Assembly Code Generation Using Objdump
 
@@ -242,7 +242,7 @@ q
 ### Screenshots
 <img width="1912" height="1195" alt="Screenshot 2026-11-23 185921" src="https://github.com/user-attachments/assets/288dfc36-18e4-4835-8d41-45c1ef488ff8" />
 <img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_18_28_39" src="https://github.com/user-attachments/assets/992cb6b3-bdda-4b85-8698-df83c9cc51e6" />
-
+<img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_17_57_50" src="https://github.com/user-attachments/assets/abbe4344-e352-477c-b7f0-9aae6bc2f660" />
 ## 8. Experiment 5 – Understanding Signed and Unsigned Integer Representation
 
 ### Objective

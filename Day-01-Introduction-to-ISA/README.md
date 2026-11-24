@@ -277,11 +277,8 @@ The unsigned integer experiment explored the maximum value represented by an uns
 **Source file:** `unsignedHighest.c`
 
 ### Screenshot
-
-![Unsigned integer program](images/unsigned_integer_code.png)
 <img width="955" height="1030" alt="VirtualBox_Risc-v_23_11_2026_20_21_10" src="https://github.com/user-attachments/assets/fd654f36-f7af-4287-a3b4-7e25b941b4a2" />
-
-
+<img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_20_31_23" src="https://github.com/user-attachments/assets/57c97506-97d7-4626-bb8a-91bef8d1d558" />
 ## 9. Practical Work Summary
 
 | Experiment | Description | Status |

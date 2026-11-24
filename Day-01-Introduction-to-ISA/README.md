@@ -243,7 +243,7 @@ q
 <img width="1912" height="1195" alt="Screenshot 2026-11-23 185921" src="https://github.com/user-attachments/assets/288dfc36-18e4-4835-8d41-45c1ef488ff8" />
 <img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_18_28_39" src="https://github.com/user-attachments/assets/992cb6b3-bdda-4b85-8698-df83c9cc51e6" />
 <img width="1920" height="1043" alt="VirtualBox_Risc-v_23_11_2026_17_57_50" src="https://github.com/user-attachments/assets/abbe4344-e352-477c-b7f0-9aae6bc2f660" />
-## 8. Experiment 5 – Understanding Signed and Unsigned Integer Representation
+### 8. Experiment 5 – Understanding Signed and Unsigned Integer Representation
 
 ### Objective
 
